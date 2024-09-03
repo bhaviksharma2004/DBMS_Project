@@ -26,7 +26,7 @@ void cellMenu(cell *topLeft, cell *bottomLeft, char *primaryKey) {
                 break;
             case '3':
                 printf("Selected remove last row\n");
-                removeRow(&bottomLeft, &primaryKey);
+                removeRow(&topLeft, &bottomLeft, &primaryKey);
                 break;
             case '4':
                 printf("Selected remove row by value\n");
