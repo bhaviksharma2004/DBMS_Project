@@ -36,6 +36,11 @@ void createTable(table **table_head, table **table_tail) {
 }
 
 void removeTable(table **table_head) {
+    if (*table_head == NULL) {
+        printf("No tables available to remove.\n\n");
+        return;
+    }
+
     char name[33];
     printf("Enter name of the table 1-32 characters: ");
     scanf("%32s", name);
@@ -46,56 +51,70 @@ void removeTable(table **table_head) {
         printf("Table does not exist\n\n");
         return;
     }
-    num_table--;
 
-    if(strcmp((*table_head)->name, name) == 0) {
-        table *temp = *table_head;
-        *table_head = (*table_head)->next;
-        free(temp->name);
-        free(temp->primaryKey);
-        free(temp);
-        printf("Table '%s' removed successfully.\n\n", name);
-        return;
-    }
-
-    table *table_node = *table_head;
+    table *current = *table_head;
     table *prev = NULL;
-    while(table_node) {
-        if(strcmp(table_node->name, name) == 0) {
-            prev->next = table_node->next;
-            free(table_node->name);
-            free(table_node->primaryKey);
-            free(table_node);
+    while(current) {
+        if(strcmp(current->name, name) == 0) {
+            if (prev == NULL) {     // Removing head table
+                *table_head = current->next;
+            }
+            else {
+                prev->next = current->next;
+            }
+
+            freeCells(current->topLeft);  // MOST IMP. TO CLEAN UP WHOLE MEMORY INSIDE THE TABLE
+
+            prev->next = current->next;
+            free(current->name);
+            free(current->primaryKey);
+            free(current);
+
+            num_table--;
             printf("Table '%s' removed successfully.\n\n", name);
             return;
         }
-        prev = table_node;
-        table_node = table_node->next;
+        prev = current;
+        current = current->next;
     }
     printf("Table '%s' not found.\n\n", name);
 }
 
 void selectTable(table **table_head) {
+    if (*table_head == NULL) {
+        printf("No tables available to select.\n\n");
+        return;
+    }
+     
     char name[33];
     printf("Enter name of the table 1-32 characters: ");
     scanf("%32s", name);
     while (getchar() != '\n');
 
 
-    // Check if the table exists
-    if (!tableExist(name, *table_head)) {
-        printf("Table '%s' does not exist\n\n", name);
+    table *current = *table_head;
+    while (current) {
+        if (strcmp(current->name, name) == 0) {
+            printf("Selected table '%s'.\n\n", name);
+            cellMenu(current->topLeft, current->bottomLeft, current->primaryKey);
+            return;
+        }
+        current = current->next;
+    }
+    printf("Table '%s' not found.\n\n", name);
+}
+
+void listTables(table *table_head){
+    if(table_head == NULL){ 
+        printf("\nNo table to print\n\n");
         return;
     }
 
-    table *table_node = *table_head;
-    while (table_node) {
-        if (strcmp(table_node->name, name) == 0) {
-            printf("Selected table '%s'.\n\n", name);
-            cellMenu(table_node->topLeft, table_node->bottomLeft, table_node->primaryKey);
-            return;
-        }
-        table_node = table_node->next;
+    printf("\n");
+    table *curr = table_head;
+    while(curr){
+        printf("%s\n", curr->name);
+        curr = curr->next;
     }
-    printf("Table '%s' not found.\n\n", name);
+    printf("\n\n");
 }

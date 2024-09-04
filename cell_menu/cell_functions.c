@@ -9,19 +9,25 @@ void showTable(cell *topLeft) {
         printf("The table is empty.\n");
         return;
     }
+    printf("\n");
+    cell *curr = topLeft;
+    while(curr){
+        printf("%-32s", curr->colName);
+        curr = curr->right;
+    }
+    printf("\n\n");
 
     cell *row = topLeft;
     while (row) {
         cell *col = row;
-        while (col) {
+        while (col) {            
             printCell(col);
             col = col->right;
         }
         printf("\n");
         row = row->down;
     }
-    printf("_______________________");
-    printf("\n\n");
+    printf("_______________________\n\n");
 }
 
 void addRow(cell **bottomLeft, cell **topLeft, char **primaryKey) {
@@ -30,8 +36,9 @@ void addRow(cell **bottomLeft, cell **topLeft, char **primaryKey) {
         printf("\nAdding the first row (header row).\n");
 
         int numCols;
-        printf("Enter the number of columns to add: ");
+        printf("Enter no. of columns to add: ");
         scanf("%d", &numCols);
+        
         if (numCols < 1){
             printf("Invalid number of columns. Returning to menu.\n");
             cellMenu(*topLeft, *bottomLeft, *primaryKey);
@@ -45,10 +52,36 @@ void addRow(cell **bottomLeft, cell **topLeft, char **primaryKey) {
 }
 
 void removeRow(cell **topLeft, cell **bottomLeft, char **primaryKey) {
-    deleteRow(topLeft, bottomLeft);
+    if (*bottomLeft == NULL) {
+        printf("No rows to remove.\n");
+        return;
+    }
+
+    if (*bottomLeft == *topLeft) { // Single row scenario
+        freeCells(*topLeft);
+
+        *topLeft = NULL;
+        *bottomLeft = NULL;
+        printf("Last row removed. The table is now empty.\n");
+        return;
+    }
+
+    cell *prev = NULL;
+    cell *row = *topLeft;
+
+    while (row->down) {
+        prev = row;
+        row = row->down;
+    }
+
+    prev->down = NULL;
+    freeCells(row);
+
+    *bottomLeft = prev;
+    printf("Row removed successfully.\n");
 }
 
-void removeRowByValue(cell **topLeft, char **primaryKey) {
+void removeRowByValue(cell **topLeft, cell **bottomLeft, char **primaryKey) {
     if (*topLeft == NULL) {
         printf("No Rows to delete\n");
         return;
@@ -56,8 +89,9 @@ void removeRowByValue(cell **topLeft, char **primaryKey) {
 
     char to_delete[33];
     printf("Enter value to delete (Value must be in primary key Column) : \n");
-    scanf("%32s", to_delete);
+    scanf("%32s", to_delete);    
     while (getchar() != '\n');
+
 
     cell *searchCol = *topLeft;
     cell *rowStart = *topLeft;
@@ -67,15 +101,25 @@ void removeRowByValue(cell **topLeft, char **primaryKey) {
                 int isNumeric = isNum(to_delete);
 
                 if(isNumeric && (*(int *)searchCol->data == atoi(to_delete)) || (!isNumeric && strcmp((char *)searchCol->data, to_delete) == 0)){
-                    deleteRow(topLeft, &rowStart);
+                    deleteRow(topLeft, bottomLeft, &rowStart);
                     return;
                 }
                 searchCol = searchCol->down;
                 rowStart = rowStart->down;
             }
             printf("Value doesn't Exist");
-            break;
+            return;
         }
         searchCol = searchCol->right;
     }
+    printf("Primary key column not found.\n");
+}
+
+void listColumns(cell *topLeft){
+    cell *curr = topLeft;
+    while(curr){
+        printf("%-32s", curr->colName);
+        curr = curr->right;
+    }
+    printf("\n");
 }

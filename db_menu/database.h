@@ -12,8 +12,11 @@ typedef struct database {
 
 // Function declarations related to the database structure
 void createDatabase(db **db_head, db **db_tail);
-void removeDatabase(db **db_head);
+void removeDatabase(db **db_head, db **db_tail);
 void selectDatabase(db **db_head);
-void saveDatabase();
+void saveDatabase(const char *filePath, db *db_head);
+void listDatabases(db *db_head);
+
+void loadDatabases(db **db_head, db **db_tail);
 
 #endif

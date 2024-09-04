@@ -9,6 +9,7 @@ void cellMenu(cell *topLeft, cell *bottomLeft, char *primaryKey) {
         printf(" 2. Add row\n");
         printf(" 3. Remove last row\n");
         printf(" 4. Remove row by value\n");
+        printf(" 5. List all columns\n");
         printf(" 0. Go back to tables\n");
 
         char choice[2];
@@ -16,23 +17,22 @@ void cellMenu(cell *topLeft, cell *bottomLeft, char *primaryKey) {
         while (getchar() != '\n');
 
         switch (choice[0]) {
-            case '1':
-                printf("Printing Table\n\n");
+            case '1' :
                 showTable(topLeft);
                 break;
-            case '2':
-                printf("Selected Add row\n");
+            case '2' :
                 addRow(&bottomLeft, &topLeft, &primaryKey);
                 break;
-            case '3':
-                printf("Selected remove last row\n");
+            case '3' :
                 removeRow(&topLeft, &bottomLeft, &primaryKey);
                 break;
-            case '4':
-                printf("Selected remove row by value\n");
-                removeRowByValue(&topLeft, &primaryKey);
+            case '4' :
+                removeRowByValue(&topLeft, &bottomLeft, &primaryKey);
                 break;
-            case '0':
+            case '5' :
+                listColumns(topLeft);
+                break;
+            case '0' :
                 return;
             default:
                 printf("\nInvalid choice. Please try again.\n\n");

@@ -14,6 +14,7 @@ void cellMenu(cell *topLeft, cell *bottomLeft, char *primaryKey);
 void showTable(cell *topLeft);
 void addRow(cell **bottomLeft, cell **topLeft, char **primaryKey);
 void removeRow(cell **topLeft, cell **bottomLeft, char **primaryKey);
-void removeRowByValue(cell **topLeft, char **primaryKey);
+void removeRowByValue(cell **topLeft, cell **bottomLeft, char **primaryKey);
+void listColumns(cell *topLeft);
 
 #endif

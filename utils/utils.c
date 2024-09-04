@@ -4,9 +4,11 @@
 #include "utils.h"
 
 int dbExist(char *name, db *db_head) {
-    while(db_head) {
-        if(strcmp(db_head->name, name) == 0) return 1;
-        db_head = db_head->next;
+    db *current = db_head;
+    while (current) {
+        if (strcmp(current->name, name) == 0) return 1;
+        
+        current = current->next;
     }
     return 0;
 }
@@ -107,7 +109,7 @@ void deleteRow(cell **topLeft, cell **bottomLeft, cell **head){
     if (*head == NULL) {
         printf("No Rows to delete\n");
         return;
-    }   
+    }
     // If 1st row need to delete
     if ((*head)->top == NULL) {
         *topLeft = (*topLeft)->down;

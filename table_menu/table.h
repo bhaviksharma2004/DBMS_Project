@@ -17,5 +17,6 @@ void tableMenu(table **table_head, table **table_tail);
 void createTable(table **table_head, table **table_tail);
 void removeTable(table **table_head);
 void selectTable(table **table_head);
+void listTables(table *table_head);
 
 #endif
