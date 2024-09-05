@@ -25,4 +25,5 @@ void assignPrimaryKey(cell **topLeft, char **primaryKey);
 int isNum(char *to_delete);
 
 void freeCells(cell *topLeft);
+
 #endif

@@ -17,6 +17,4 @@ void selectDatabase(db **db_head);
 void saveDatabase(const char *filePath, db *db_head);
 void listDatabases(db *db_head);
 
-void loadDatabases(db **db_head, db **db_tail);
-
 #endif

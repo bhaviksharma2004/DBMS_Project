@@ -5,12 +5,7 @@ int main(){
     db *db_head = NULL;
     db *db_tail = NULL;
 
-    // Define the metadata file path before the switch statement
-    const char *filePath = "databases_metadata.txt";
-
-    // Optionally load databases at the start
-    loadDatabases(&db_head, &db_tail);
-
+    const char *filePath = "databases_data.txt";
 
     while(1){
         printf("Menu:\n");
