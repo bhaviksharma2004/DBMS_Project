@@ -9,6 +9,7 @@ This project is a menu-driven DBMS implemented in C. It allows users to create a
 - [Features](#features)
 - [File Format](#file-format)
 - [Getting Started](#getting-started)
+- [Usage](#usage)
 - [Contributing](#contributing)
   
 ## Features
@@ -56,9 +57,19 @@ END_DATABASE
      ```bash
      run_linux.sh
      ```
-2. Follow the on-screen menu to create databases, tables, and insert data.
-3. Save databases.
-4. Load databases.
+## Usage
+
+1. Compile the source code using the provided shell scripts:
+   - `run_project.sh` for Unix-like systems (bash shell).
+   - `run_project.bat` for Windows Command Prompt.
+
+2. Run the compiled executable
+
+3. Saved databases get loaded automatically
+
+4. Follow the on-screen menu to create databases, tables, and insert data.
+
+5. Save databases.
 
 ## Contributing
 
