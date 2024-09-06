@@ -4,20 +4,18 @@
 #include "cell.h"
 #include "../utils/utils.h"
 
-void showTable(cell *topLeft) {
-    if (topLeft == NULL) {
-        printf("The table is empty.\n");
-        return;
-    }
-    printf("\n");
+// Helper functions
+
+void printColumnNames(cell *topLeft) {
     cell *curr = topLeft;
-    while(curr){
+    while(curr) {
         printf("%-32s", curr->colName);
         curr = curr->right;
     }
     printf("\n\n");
+}
 
-    cell *row = topLeft;
+void printRows(cell *row) {
     while (row) {
         cell *col = row;
         while (col) {            
@@ -27,8 +25,20 @@ void showTable(cell *topLeft) {
         printf("\n");
         row = row->down;
     }
-    printf("_______________________\n\n");
+    printf("_______________________\n");
 }
+
+void showTable(cell *topLeft) {
+    if (topLeft == NULL) {
+        printf("The table is empty.\n");
+        return;
+    }
+    printf("\n");
+    printColumnNames(topLeft);
+    printRows(topLeft);
+}
+
+// Menu functions
 
 void addRow(cell **bottomLeft, cell **topLeft, char **primaryKey) {
     // For the first row (header row)
@@ -116,6 +126,8 @@ void removeRowByValue(cell **topLeft, cell **bottomLeft, char **primaryKey) {
 }
 
 void listColumns(cell *topLeft){
+    if(topLeft == NULL) printf("No Columns in table");
+
     cell *curr = topLeft;
     while(curr){
         printf("%-32s", curr->colName);

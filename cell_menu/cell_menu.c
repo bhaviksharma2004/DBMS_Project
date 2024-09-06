@@ -4,7 +4,7 @@
 
 void cellMenu(cell *topLeft, cell *bottomLeft, char *primaryKey) {
     while (1) {
-        printf("Menu:\n");
+        printf("\nMenu:\n");
         printf(" 1. Show table\n");
         printf(" 2. Add row\n");
         printf(" 3. Remove last row\n");
@@ -35,7 +35,7 @@ void cellMenu(cell *topLeft, cell *bottomLeft, char *primaryKey) {
             case '0' :
                 return;
             default:
-                printf("\nInvalid choice. Please try again.\n\n");
+                printf("\nInvalid choice. Please try again.\n");
         }
     }
 }

@@ -7,6 +7,34 @@
 
 int num_table = 0;
 
+// Helper functions
+void freeTableResources(table *tbl) {
+    freeCells(tbl->topLeft);  // Free memory inside the table
+    free(tbl->name);
+    free(tbl->primaryKey);
+    free(tbl);
+}
+
+table* findAndRemoveTable(table **table_head, const char *name) {
+    table *current = *table_head;
+    table *prev = NULL;
+
+    while (current) {
+        if (strcmp(current->name, name) == 0) {
+            if (prev == NULL) {  // Removing head table
+                *table_head = current->next;
+            } else {
+                prev->next = current->next;
+            }
+            return current;
+        }
+        prev = current;
+        current = current->next;
+    }
+    return NULL;
+}
+
+// Menu functions
 void createTable(table **table_head, table **table_tail) {
     char name[33];
     printf("Enter name of the table 1-32 characters: ");
@@ -26,9 +54,12 @@ void createTable(table **table_head, table **table_tail) {
     new_table->bottomLeft= NULL;
     new_table->next = NULL;
 
-    if(*table_tail == NULL) *table_head = new_table;
-    else (*table_tail)->next = new_table;
-
+    if (*table_tail == NULL) { 
+        *table_head = new_table;
+    }
+    else{ 
+        (*table_tail)->next = new_table;
+    }
     *table_tail = new_table;
 
     printf("Table '%s' created successfully.\n\n", name);
@@ -52,32 +83,16 @@ void removeTable(table **table_head) {
         return;
     }
 
-    table *current = *table_head;
-    table *prev = NULL;
-    while(current) {
-        if(strcmp(current->name, name) == 0) {
-            if (prev == NULL) {     // Removing head table
-                *table_head = current->next;
-            }
-            else {
-                prev->next = current->next;
-            }
-
-            freeCells(current->topLeft);  // MOST IMP. TO CLEAN UP WHOLE MEMORY INSIDE THE TABLE
-
-            prev->next = current->next;
-            free(current->name);
-            free(current->primaryKey);
-            free(current);
-
-            num_table--;
-            printf("Table '%s' removed successfully.\n\n", name);
-            return;
-        }
-        prev = current;
-        current = current->next;
+    table *table_to_remove = findAndRemoveTable(table_head, name);
+    if (table_to_remove) {
+        // Free Table Resources
+        freeTableResources(table_to_remove);
+        num_table--;
+        printf("Table '%s' removed successfully.\n\n", name);
+    } 
+    else {
+        printf("Table '%s' not found.\n\n", name);
     }
-    printf("Table '%s' not found.\n\n", name);
 }
 
 void selectTable(table **table_head) {

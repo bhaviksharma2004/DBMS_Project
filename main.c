@@ -6,6 +6,7 @@ int main(){
     db *db_tail = NULL;
 
     const char *filePath = "databases_data.txt";
+    loadDatabases(filePath, &db_head, &db_tail);
 
     while(1){
         printf("Menu:\n");

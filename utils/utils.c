@@ -38,6 +38,15 @@ void printCell(cell *cell){
     }
 }
 
+int isValidDate(char *data) {
+    int n = strlen(data);
+    int c = 0;
+    for(int i = 0; i < n; i++){
+        if(data[i] == '-') c++;
+    }
+    return (c == 2 && data[2] == '-' && data[5] == '-');
+}
+
 cell *createCell(char *type) {
     cell *newCell = (cell *) malloc(sizeof(cell));
 
@@ -73,15 +82,23 @@ cell *createCell(char *type) {
     else if (strcmp(type, "STRING") == 0) {
         printf("Enter data in STRING format: ");
         char data[33];
-        scanf("%s", data);
+        scanf("%32s", data);
+        while(getchar() != '\n');
 
         newCell->data = malloc(strlen(data) + 1);
         strcpy((char *)newCell->data, data);
     }
     else if (strcmp(type, "DATE") == 0) {
-        printf("Enter data in DATE(DD-MM-YYYY) format: ");
         char data[11];
-        scanf("%s", data);
+        while(1){
+            printf("Enter data in DATE(DD-MM-YYYY) format: ");
+            scanf("%10s", data);
+            while(getchar() != '\n');
+
+            // Check date format
+            if (strlen(data) == 10 && isValidDate(data)) break;
+            else printf("Invalid date format. Please try again.\n");
+        }
         
         newCell->data = malloc(strlen(data) + 1);
         strcpy((char *)newCell->data, data);
@@ -321,4 +338,35 @@ void freeCells(cell *topLeft) {
         row = row->down;
         free(tempRow);
     }
+}
+
+void insertCellData(cell *column_cell, const char *data) {
+    if (column_cell == NULL || data == NULL) return;
+
+    // Create a mutable copy of data to modify
+    char *cleaned_data = strdup(data);
+
+    // Remove trailing newline or whitespace characters
+    char *end = cleaned_data + strlen(cleaned_data) - 1;
+    while (end >= cleaned_data && (*end == '\n' || *end == '\r' || *end == ' ')) {
+        *end-- = '\0';
+    }
+
+    if (strcmp(column_cell->dataType, "INTEGER") == 0) {
+        int *intData = malloc(sizeof(int));
+        *intData = atoi(cleaned_data);
+        column_cell->data = intData;
+    }
+    else if (strcmp(column_cell->dataType, "FLOAT") == 0) {
+        float *floatData = malloc(sizeof(float));
+        *floatData = atof(cleaned_data);
+        column_cell->data = floatData;
+    }
+    else if (strcmp(column_cell->dataType, "STRING") == 0) {
+        column_cell->data = strdup(cleaned_data);
+    }
+    else if (strcmp(column_cell->dataType, "DATE") == 0) {
+        column_cell->data = strdup(cleaned_data);
+    }
+    free(cleaned_data);
 }
