@@ -21,19 +21,19 @@ This project is a menu-driven DBMS implemented in C. It allows users to create a
 
 ## File Format
 
-The saved `.txt` file will contain the following format:
-DATABASE:<db_name>
-TABLE:<table_name> <primary_key>
-<column_name> <data_type>
-.
-.
-<data_entry>
-.
-.
+The saved `.txt` file will contain the metadata of the databases in the following format:
+```
+DATABASE:my_database
+TABLE:my_table primary_key
+column1 INTEGER  
+column2 STRING  
+column3 FLOAT  
+column4 DATE
+data_entry1  
+data_entry2
 END_TABLE
 END_DATABASE
-.
-.
+```
 
 
 ## Getting Started
