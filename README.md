@@ -9,7 +9,6 @@ This project is a menu-driven DBMS implemented in C. It allows users to create a
 - [Features](#features)
 - [File Format](#file-format)
 - [Getting Started](#getting-started)
-- [Usage](#usage)
 - [Contributing](#contributing)
   
 ## Features
@@ -45,19 +44,18 @@ END_DATABASE
     ```
 2. Navigate to the project directory:
     ```bash
-    cd <project_directory>
+    cd DBMS_Project
     ```
-3. Compile the code:
-    ```bash
-    gcc
-    ```
-
-## Usage
-
-1. Run the program:
-    ```bash
-    ./dbms
-    ```
+3. Compile and run the project:
+   
+     - For Windows:
+     ```bash
+     run_windows.bat
+     ```
+     - For Unix based systems:
+     ```bash
+     run_linux.sh
+     ```
 2. Follow the on-screen menu to create databases, tables, and insert data.
 3. Save databases.
 4. Load databases.
