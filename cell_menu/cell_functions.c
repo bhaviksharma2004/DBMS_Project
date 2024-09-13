@@ -68,8 +68,7 @@ void removeRow(cell **topLeft, cell **bottomLeft, char **primaryKey) {
     }
 
     if (*bottomLeft == *topLeft) { // Single row scenario
-        freeCells(*topLeft);
-
+        freeSingleRow(*topLeft);
         *topLeft = NULL;
         *bottomLeft = NULL;
         printf("Last row removed. The table is now empty.\n");
@@ -85,7 +84,7 @@ void removeRow(cell **topLeft, cell **bottomLeft, char **primaryKey) {
     }
 
     prev->down = NULL;
-    freeCells(row);
+    freeSingleRow(row);
 
     *bottomLeft = prev;
     printf("Row removed successfully.\n");

@@ -48,6 +48,7 @@ int main(){
                 else if(flag == 'n'){
                     printf("Saving database.\n\n");
                     saveDatabase(filePath, db_head);
+                    return 0;
                 }
                 break;
             default:

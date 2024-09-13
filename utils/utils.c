@@ -320,23 +320,32 @@ int isNum(char *to_delete){
     return 1;
 }
 
+void freeSingleRow(cell *row) {
+    cell *col = row;
+    while (col) {
+        cell *temp = col;
+        col = col->right;
+        
+        if (temp->data) {
+            free(temp->data);
+        }
+        if (temp->colName) {
+            free(temp->colName);
+        }
+        if (temp->dataType) {
+            free(temp->dataType);
+        }
+        free(temp);
+    }
+}
+
 // Clean whole memory inside a table
 void freeCells(cell *topLeft) {
     cell *row = topLeft;
     while (row) {
-        cell *col = row;
-        while (col) {
-            cell *temp = col;
-            col = col->right;
-            
-            free(temp->data);
-            free(temp->colName);
-            free(temp->dataType);
-            free(temp);
-        }
-        cell *tempRow = row;
-        row = row->down;
-        free(tempRow);
+        cell *nextRow = row->down; // Store next row before freeing current row
+        freeSingleRow(row);
+        row = nextRow;
     }
 }
 

@@ -24,6 +24,7 @@ void assignPrimaryKey(cell **topLeft, char **primaryKey);
 
 int isNum(char *to_delete);
 
+void freeSingleRow(cell *row);
 void freeCells(cell *topLeft);
 void insertCellData(cell *column_cell, const char *data);
 

@@ -9,9 +9,19 @@ int num_table = 0;
 
 // Helper functions
 void freeTableResources(table *tbl) {
-    freeCells(tbl->topLeft);  // Free memory inside the table
-    free(tbl->name);
-    free(tbl->primaryKey);
+    if (tbl == NULL) return;
+
+    if (tbl->topLeft) {
+        freeCells(tbl->topLeft);
+    }
+    
+    if (tbl->name) {
+        free(tbl->name);
+    }
+    
+    if (tbl->primaryKey) {
+        free(tbl->primaryKey);
+    }    
     free(tbl);
 }
 
@@ -78,7 +88,7 @@ void removeTable(table **table_head) {
     while (getchar() != '\n');
 
 
-    if(num_table == 0 || !tableExist(name, *table_head)) {
+    if(!tableExist(name, *table_head)) {
         printf("Table does not exist\n\n");
         return;
     }
