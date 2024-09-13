@@ -10,4 +10,4 @@ gcc main.c cell_functions.o cell_menu.o db_functions.o table_functions.o table_m
 
 rm cell_functions.o cell_menu.o db_functions.o table_functions.o table_menu.o utils.o
 
-./my_program
+./myProgram
