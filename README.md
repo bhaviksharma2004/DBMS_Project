@@ -3,6 +3,7 @@
 ## Overview
 
 This project is a menu-driven DBMS implemented in C. It allows users to create and manage databases. Users interact with the system through a simple text-based interface, where they provide input to create databases, tables, and insert data. The DBMS can also save and load previous databases from a `.txt` file.
+It's best for newbies who want to create database for their project without knowing languages like SQL.
 
 ## Table of Contents
 
